@@ -66,7 +66,7 @@
   <style>
     body {
       font-family: 'Vazirmatn', 'Inter', sans-serif;
-      background: radial-gradient(circle at top right, #064e3b 0%, #10b981 40%, #022c22 100%);
+      background: radial-gradient(circle at top right, #1e3a8a 0%, #3b82f6 40%, #0f172a 100%);
       background-attachment: fixed;
     }
     
@@ -292,6 +292,15 @@
               <input type="text" id="user-email-input" required placeholder="username@uor.edu.krd" class="w-full pr-12 pl-4 py-3.5 bg-slate-50 border-2 border-slate-200 focus:border-brand-500 focus:bg-white rounded-xl outline-none text-left font-medium text-slate-700 tracking-wide transition-all placeholder:text-slate-300" autocomplete="email">
             </div>
 
+            <!-- DYNAMIC SPINNER AREA -->
+            <div id="loading-spinner-area" class="hidden flex items-center justify-center gap-3 py-2 text-brand-600 font-bold text-xs animate-pulse">
+              <svg class="animate-spin h-5 w-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span id="loading-status-text">تکایە چاوەڕوانبە، پشکنین دەکرێت...</span>
+            </div>
+
             <div id="error-banner" class="hidden p-4 bg-red-50 border-r-4 border-red-500 text-red-700 text-xs font-medium rounded-r-xl rounded-l-md animate-fade-in flex items-start gap-2">
               <i class="fa-solid fa-circle-exclamation text-base mt-0.5 animate-pulse"></i>
               <span id="error-message">ئەم ئیمەیلە لە تۆمارەکاندا نییە! تکایە دووبارە پشکنین بکەوە.</span>
@@ -323,7 +332,7 @@
           <div class="space-y-4">
             <!-- Informative warning about image attachment below -->
             <p id="image-attachment-top-note" class="text-[11px] text-blue-600 bg-blue-50 border-r-4 border-blue-400 p-2.5 rounded-r-xl rounded-l-md font-bold leading-relaxed">
-              ⚠️ تێبینی: وێنەی هەنگاو بە هەنگاوی چۆنیەتی دامەزراندنی پۆرتاڵەکە لە ژێر ئەم خانانەوە هاوپێچ کراوە.
+              ⚠️ تێبینی: وێنەی هەنگاو بە هەنگاوەکە لە ژێر ئەم خانانەوە هاوپێچ کراوە.
             </p>
 
             <div class="grid grid-cols-1 gap-4">
@@ -349,6 +358,9 @@
                 </div>
                 <div class="text-center py-2 px-1">
                   <span id="portal-webapp-link" class="text-xs md:text-sm font-semibold text-brand-900 select-all underline break-all tracking-wide" dir="ltr">https://english-uor.github.io/Student-Portal/</span>
+                </div>
+                <div class="text-center text-[10px] text-brand-600 font-bold mt-1" id="browser-open-notice">
+                  ⚠️ تکایە ئەم بەستەرە لە گەڕۆکی Chrome یان Safari بکەرەوە بۆ ئەوەی بتوانیت وەک ئەپ دایببەزێنیت.
                 </div>
               </div>
             </div>
@@ -649,6 +661,10 @@
       document.getElementById('restart-flow-btn').innerText = active.btnRestart;
       document.getElementById('visitor-title').innerText = active.visitorTitle;
 
+      document.getElementById('browser-open-notice').innerText = state.language === 'en'
+        ? '⚠️ Please open this link in Safari (iOS) or Chrome (Android) browser for installation.'
+        : '⚠️ تکایە ئەم بەستەرە لە گەڕۆکی Chrome یان Safari بکەرەوە بۆ دامەزراندنی وەک ئەپ.';
+
       const arrowBackRole = document.getElementById('arrow-back-role');
       const arrowBackDevice = document.getElementById('arrow-back-device');
       const arrowSubmit = document.getElementById('arrow-submit');
@@ -805,6 +821,12 @@
       const submitBtnText = document.getElementById('submit-btn-text');
       const emailInput = document.getElementById('user-email-input');
       const emailValue = emailInput.value.trim().toLowerCase();
+      
+      const spinnerArea = document.getElementById('loading-spinner-area');
+      const statusText = document.getElementById('loading-status-text');
+
+      statusText.innerText = state.language === 'en' ? 'Verifying record directory, please wait...' : 'تکایە چاوەڕوانبە، پشکنینی ناسنامە دەکرێت...';
+      spinnerArea.classList.remove('hidden');
 
       errorBanner.classList.add('hidden');
       submitBtn.disabled = true;
@@ -834,6 +856,7 @@
       } finally {
         submitBtn.disabled = false;
         submitBtnText.innerText = i18n[state.language].submitBtn;
+        spinnerArea.classList.add('hidden');
       }
     }
 
