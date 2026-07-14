@@ -19,6 +19,9 @@
   <!-- Canvas Confetti for the celebration animation -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+  <!-- html2canvas to convert beautiful credential elements to downloadable PNG cards -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -30,7 +33,7 @@
             brand: {
               50: '#f0f7ff',
               100: '#e0effe',
-              500: '#10b981', // Updated primary brand color to beautiful Emerald Green
+              500: '#10b981', // Emerald Green active accents
               600: '#059669',
               800: '#064e3b', // Deep Green
               900: '#022c22',
@@ -66,6 +69,7 @@
   <style>
     body {
       font-family: 'Vazirmatn', 'Inter', sans-serif;
+      /* Background updated to Indigo/Midnight Blue to match your layout requests */
       background: radial-gradient(circle at top right, #1e3a8a 0%, #3b82f6 40%, #0f172a 100%);
       background-attachment: fixed;
     }
@@ -337,29 +341,39 @@
 
             <div class="grid grid-cols-1 gap-4">
               <!-- 1. Unique Secret Key in bold red with copy overlay trigger -->
-              <div onclick="copyTextToClipboard('secret-login-code', 'code-toast')" class="relative overflow-hidden cursor-pointer bg-red-50 hover:bg-red-100 border-2 border-red-200 hover:border-red-400 p-4 rounded-2xl transition duration-300 flex flex-col justify-between gap-1 shadow-sm active:scale-95 group">
-                <div class="flex justify-between items-center text-xs text-red-500 font-bold">
+              <div class="relative overflow-hidden bg-red-50 border-2 border-red-200 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+                <div onclick="copyTextToClipboard('secret-login-code', 'code-toast', 'code')" class="w-full cursor-pointer hover:bg-red-100/50 p-2 rounded-xl transition flex justify-between items-center text-xs text-red-500 font-bold active:scale-[0.98]">
                   <span id="label-red-code">🔑 کۆدی نهێنی چوونەژوورەوە (بیکۆپی بکە)</span>
-                  <i class="fa-regular fa-copy text-sm group-hover:scale-110 transition"></i>
+                  <i class="fa-regular fa-copy text-sm"></i>
                 </div>
-                <div class="text-center py-2">
+                <div class="text-center py-1">
                   <span id="secret-login-code" class="text-2xl md:text-3xl font-black text-red-600 tracking-widest leading-none">CODE123</span>
                 </div>
+                <!-- Save code as image download link -->
+                <button onclick="downloadCodePassAsPNG()" class="w-full mt-1 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
+                  <i class="fa-solid fa-file-image"></i>
+                  <span id="btn-save-image-text">کۆدەکە وەک وێنە پاشەکەوت بکە (PNG)</span>
+                </button>
                 <div class="text-center text-[10px] text-red-500 font-bold" id="label-secret-alert">
                   🔒 ئەم کۆدە بە تەواوی بە نهێنی بیپارێزە و هاوبەشی پێ مەکە!
                 </div>
               </div>
 
               <!-- 2. Portal link beautiful copy container -->
-              <div onclick="copyTextToClipboard('portal-webapp-link', 'link-toast')" class="relative overflow-hidden cursor-pointer bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 hover:border-brand-500 p-4 rounded-2xl transition duration-300 flex flex-col justify-between gap-1 shadow-sm active:scale-95 group">
-                <div class="flex justify-between items-center text-xs text-slate-500 font-bold">
+              <div class="relative overflow-hidden bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+                <div onclick="copyTextToClipboard('portal-webapp-link', 'link-toast', 'link')" class="w-full cursor-pointer hover:bg-slate-100 p-2 rounded-xl transition flex justify-between items-center text-xs text-slate-500 font-bold active:scale-[0.98]">
                   <span id="label-portal-link">🔗 بەستەری پۆرتاڵ (بیکۆپی بکە)</span>
-                  <i class="fa-regular fa-copy text-sm group-hover:scale-110 transition"></i>
+                  <i class="fa-regular fa-copy text-sm"></i>
                 </div>
-                <div class="text-center py-2 px-1">
+                <div class="text-center py-1 px-1">
                   <span id="portal-webapp-link" class="text-xs md:text-sm font-semibold text-brand-900 select-all underline break-all tracking-wide" dir="ltr">https://english-uor.github.io/Student-Portal/</span>
                 </div>
-                <div class="text-center text-[10px] text-brand-600 font-bold mt-1" id="browser-open-notice">
+                <!-- Interactive Action button to launch portal web app dynamically escaping webview constraints -->
+                <button onclick="openSmartLink(document.getElementById('portal-webapp-link').innerText)" class="w-full py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
+                  <i class="fa-solid fa-circle-arrow-up"></i>
+                  <span id="btn-launch-browser-text">ڕاستەوخۆ بیکەرەوە (Launch App)</span>
+                </button>
+                <div class="text-center text-[10px] text-brand-600 font-bold" id="browser-open-notice">
                   ⚠️ تکایە ئەم بەستەرە لە گەڕۆکی Chrome یان Safari بکەرەوە بۆ ئەوەی بتوانیت وەک ئەپ دایببەزێنیت.
                 </div>
               </div>
@@ -376,6 +390,12 @@
               </div>
             </div>
             <div id="installation-steps" class="space-y-2"></div>
+            
+            <!-- Dynamic Inline Walkthrough PNG Image loaded from Google Drive securely -->
+            <div id="embed-walkthrough-image-container" class="pt-4 border-t border-emerald-200/50 flex flex-col items-center gap-2">
+              <p class="text-[10px] text-brand-800 font-bold animate-pulse text-center">👇 کلیک لەسەر وێنەکە بکە بۆ بینینی بە گەورەیی لە گەڕۆکدا</p>
+              <img id="embedded-manual-image" onclick="triggerSmartManualRedirect()" src="" alt="Walkthrough Manual" class="rounded-xl border border-emerald-200 shadow-md cursor-pointer hover:scale-[1.02] active:scale-95 transition-all max-w-full h-auto max-h-60 object-contain">
+            </div>
           </div>
 
           <div class="pt-2 flex flex-col gap-3">
@@ -415,7 +435,7 @@
         <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
         <h3 class="font-extrabold text-brand-900 text-sm">بەشی سەرپەرشتیار</h3>
       </div>
-      <p class="text-xs text-slate-500">تکایە کۆدی نهێنی بنووسە بۆ گۆڕینی ژمارەی سەردانەکان بۆ سفر:</p>
+      <p class="text-xs text-slate-500">تکایە کۆدی نهێنی بنووسە بۆ گۆڕینی ژمارەی سەردانەکان بۆ صفر:</p>
       <input type="password" id="admin-pin-input" placeholder="••••••••" class="w-full border-2 border-slate-200 focus:border-brand-500 p-2 text-center rounded-xl text-sm font-bold outline-none">
       <div class="flex gap-2">
         <button onclick="submitAdminReset()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-xl text-xs transition active:scale-95">سفرکردنەوە</button>
@@ -425,14 +445,61 @@
   </div>
 
   <!-- MODERN TOAST NOTIFICATION CONTAINER FOR ONE-TAP COPIES -->
-  <div id="copy-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-3 rounded-2xl text-xs font-bold shadow-xl flex items-center gap-2 z-50 animate-fade-in transition duration-300">
+  <div id="copy-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-3 rounded-2xl text-xs font-bold shadow-xl flex items-center gap-2 z-50 animate-fade-in transition duration-300 max-w-[90vw] text-center">
     <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
     <span id="toast-message-text">کۆپی کرا! / Copied!</span>
+  </div>
+
+  <div id="link-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-3 rounded-2xl text-xs font-bold shadow-xl flex items-center gap-2 z-50 animate-fade-in transition duration-300 max-w-[90vw] text-center">
+    <i class="fa-solid fa-circle-info text-blue-400 text-base"></i>
+    <span id="link-toast-message-text">بەستەرەکە کۆپی کرا! بچۆ دەرەوە و لە Chrome یان Safari لکاندی بکە.</span>
+  </div>
+
+  <!-- Premium Hidden Blueprint Element used to generate high-quality PNG credential download pass -->
+  <div id="offscreen-pass-blueprint" class="fixed top-[-9999px] left-[-9999px] w-[500px] bg-slate-900 text-white p-8 rounded-[32px] border-4 border-emerald-500 shadow-2xl font-sans" dir="rtl">
+    <div class="flex items-center gap-4 border-b border-white/10 pb-4 mb-4">
+      <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
+        <i class="fa-solid fa-graduation-cap text-brand-500 text-3xl"></i>
+      </div>
+      <div>
+        <h2 class="font-extrabold text-xl text-white">زانکۆی ڕاپەڕین</h2>
+        <p class="text-emerald-400 text-xs font-medium">بەشی زمانی ئینگلیزی — English Department</p>
+      </div>
+    </div>
+    <div class="space-y-4 py-4 text-right">
+      <div class="space-y-1">
+        <span class="text-slate-400 text-[11px] font-bold block">👤 ناوی بەکارهێنەر / NAME:</span>
+        <span id="pass-user-name" class="text-lg font-extrabold text-white">...</span>
+      </div>
+      <div class="space-y-1">
+        <span class="text-slate-400 text-[11px] font-bold block">🔒 ناسنامە / ROLE:</span>
+        <span id="pass-user-role" class="text-sm font-bold text-slate-200">...</span>
+      </div>
+      <div class="bg-red-950/80 border border-red-500/30 rounded-2xl p-4 text-center space-y-1">
+        <span class="text-red-400 text-xs font-bold block">🔑 کۆدی نهێنی چوونەژوورەوە / SECRET CODE:</span>
+        <span id="pass-secret-code" class="text-3xl font-black text-red-500 tracking-widest block">CODE123</span>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-4 text-center text-[10px] text-slate-500 font-medium">
+      🔑 تکایە ئەم کۆدە بپارێزە و هاوبەشی پێ مەکە! / Keep this passcode highly secret!
+    </div>
   </div>
 
   <script>
     // Live GAS endpoint configuration
     const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxE7KohJSmMuAUeP30-1n5AmB9aF2_w7Zxoes3TQPuxmxbT84yi_T-fO_8QIN6rZaBWFA/exec"; 
+
+    // Image mappings using real Drive IDs for inline renders
+    const DRIVE_IMAGE_IDS = {
+      teacher: {
+        android: '1RvJfS94ysswrEbfolKxZ66AEDRMEOAE5',
+        ios: '1BE2yYAJY_vbb_hbGYY-hk6pQ8EXwL7bW'
+      },
+      student: {
+        android: '1x3w5zv270zzeZGKGEveyWBAl8-8TCaLC',
+        ios: '1dzncf4Yf8AxP5yPgEsPKIqrIvZ9IzKe7'
+      }
+    };
 
     // State machine configuration
     const state = {
@@ -482,6 +549,9 @@
         labelPortalLink: '🔗 بەستەری پۆرتاڵ (بۆ کۆپیکردن کلیک بکە)',
         labelSecretAlert: '🔒 ئەم کۆدە بە تەواوی بە نهێنی بیپارێزە و هاوبەشی پێ مەکە!',
         toastSuccess: 'بە سەرکەوتوویی کۆپی کرا!',
+        toastLinkSuccess: 'بەستەرەکە کۆپی کرا! بچۆ دەرەوە و لە گەڕۆکی Chrome یان Safari لکاندی (Paste) بکە.',
+        btnSaveImageText: 'کۆدەکە وەک وێنە پاشەکەوت بکە (PNG)',
+        btnLaunchBrowserText: 'ڕاستەوخۆ بیکەرەوە (Launch App)',
         days: ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە', 'پێنجشەممە', 'هەینی', 'شەممە'],
         iosSteps: [
           '١. بۆ سیستمی iOS (iPhone/iPad):',
@@ -536,6 +606,9 @@
         labelPortalLink: '🔗 Portal URL Address (Click to Copy)',
         labelSecretAlert: '🔒 Keep this passcode strictly secret and never share it!',
         toastSuccess: 'Copied to clipboard successfully!',
+        toastLinkSuccess: 'Link copied! Go to Chrome or Safari to paste and install.',
+        btnSaveImageText: 'Save Code as Image (PNG)',
+        btnLaunchBrowserText: 'Launch App / Open Direct',
         days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         iosSteps: [
           'For iOS System (iPhone/iPad):',
@@ -554,7 +627,7 @@
       }
     };
 
-    // Computes the current Kurdish solar Hijri date accurately based on Gregorial calendar inputs
+    // Computes the current Kurdish solar Hijri date accurately based on Gregorian calendar inputs
     function getKurdishDateString(gregorianDate) {
       const gYear = gregorianDate.getFullYear();
       const startOfYear = new Date(gYear, 2, 21); // March 21
@@ -660,6 +733,8 @@
       document.getElementById('success-link-btn-text').innerText = active.btnOpenPortal;
       document.getElementById('restart-flow-btn').innerText = active.btnRestart;
       document.getElementById('visitor-title').innerText = active.visitorTitle;
+      document.getElementById('btn-save-image-text').innerText = active.btnSaveImageText;
+      document.getElementById('btn-launch-browser-text').innerText = active.btnLaunchBrowserText;
 
       document.getElementById('browser-open-notice').innerText = state.language === 'en'
         ? '⚠️ Please open this link in Safari (iOS) or Chrome (Android) browser for installation.'
@@ -779,7 +854,22 @@
       }
     }
 
-    function copyTextToClipboard(elementId, toastId) {
+    // Smart launcher bypasses internal in-app webviews to force run in system native browsers (Android Chrome, iOS Safari)
+    function openSmartLink(url) {
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      
+      if (isAndroid) {
+        // Build Google Chrome Android Intent to force-escape Facebook/Telegram webviews
+        const cleanUrl = url.replace(/^https?:\/\//, '');
+        const intentUrl = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
+        window.location.href = intentUrl;
+      } else {
+        // Standard high-performance Safari targeting
+        window.open(url, '_blank');
+      }
+    }
+
+    function copyTextToClipboard(elementId, toastId, type = 'code') {
       const copyText = document.getElementById(elementId).innerText;
       
       const tempElement = document.createElement("textarea");
@@ -791,7 +881,7 @@
       
       try {
         document.execCommand('copy');
-        triggerToastNotification(toastId);
+        triggerToastNotification(toastId, type);
       } catch (err) {
         console.error("Copy action failed: ", err);
       }
@@ -799,18 +889,48 @@
       document.body.removeChild(tempElement);
     }
 
-    function triggerToastNotification(toastId) {
+    function triggerToastNotification(toastId, type) {
       const toast = document.getElementById(toastId);
-      const toastText = document.getElementById('toast-message-text');
       
-      toastText.innerText = i18n[state.language].toastSuccess;
+      if (type === 'link') {
+        const toastLinkText = document.getElementById('link-toast-message-text');
+        toastLinkText.innerText = i18n[state.language].toastLinkSuccess;
+      } else {
+        const toastText = document.getElementById('toast-message-text');
+        toastText.innerText = i18n[state.language].toastSuccess;
+      }
+      
       toast.classList.remove('hidden');
       toast.classList.add('animate-fade-in');
       
       setTimeout(() => {
         toast.classList.add('hidden');
         toast.classList.remove('animate-fade-in');
-      }, 2000);
+      }, 3500);
+    }
+
+    // High-performance local device saver converting offline blueprints to JPEG elements
+    function downloadCodePassAsPNG() {
+      // 1. Map dynamic variables to off-screen pass template for high DPI capture
+      document.getElementById('pass-user-name').innerText = document.getElementById('user-display-name').innerText;
+      document.getElementById('pass-user-role').innerText = state.role === 'student' 
+        ? (state.language === 'en' ? 'STUDENT / قوتابی' : 'قوتابی / STUDENT') 
+        : (state.language === 'en' ? 'TEACHER / مامۆستا' : 'مامۆستا / TEACHER');
+      document.getElementById('pass-secret-code').innerText = document.getElementById('secret-login-code').innerText;
+
+      const targetEl = document.getElementById('offscreen-pass-blueprint');
+      
+      // Use html2canvas to capture the beautiful vector pass directly
+      html2canvas(targetEl, {
+        scale: 2, // Double resolution for ultra-crisp mobile display
+        useCORS: true,
+        backgroundColor: '#0f172a'
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `UOR_Portal_Pass_${document.getElementById('secret-login-code').innerText}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
     }
 
     async function verifyEmail(event) {
@@ -886,15 +1006,17 @@
       transitionSteps('step-email', 'step-success');
       updateStepTracker();
       renderPwaWalkthrough();
-      triggerConfettiShow();
+      triggerConfettiShow(); // Exact 1-second dynamic celebration trigger
     }
 
     function renderPwaWalkthrough() {
       const active = i18n[state.language];
       const container = document.getElementById('installation-steps');
       const badgeIcon = document.getElementById('os-badge-icon');
+      const embedImage = document.getElementById('embedded-manual-image');
       container.innerHTML = ''; 
 
+      // Render custom text steps
       if (state.device === 'ios') {
         badgeIcon.className = "w-8 h-8 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center shadow-inner animate-pulse";
         badgeIcon.innerHTML = `<i class="fa-brands fa-apple text-base"></i>`;
@@ -916,26 +1038,36 @@
           container.appendChild(p);
         });
       }
+
+      // Map file IDs dynamically to construct safe, hotlinkable image source
+      const selectedId = DRIVE_IMAGE_IDS[state.role][state.device];
+      embedImage.src = `https://docs.google.com/uc?export=view&id=${selectedId}`;
+    }
+
+    function triggerSmartManualRedirect() {
+      const selectedId = DRIVE_IMAGE_IDS[state.role][state.device];
+      const targetDriveUrl = `https://drive.google.com/file/d/${selectedId}/view?usp=sharing`;
+      openSmartLink(targetDriveUrl);
     }
 
     function triggerConfettiShow() {
-      const duration = 2.5 * 1000;
+      const duration = 1.0 * 1000; // Refined to exactly 1 second
       const end = Date.now() + duration;
 
       (function frame() {
         confetti({
-          particleCount: 4,
+          particleCount: 5,
           angle: 60,
-          spread: 60,
+          spread: 55,
           origin: { x: 0, y: 0.85 },
-          colors: ['#10b981', '#d97706', '#ef4444', '#ffffff']
+          colors: ['#10b981', '#3b82f6', '#f59e0b', '#ffffff']
         });
         confetti({
-          particleCount: 4,
+          particleCount: 5,
           angle: 120,
-          spread: 60,
+          spread: 55,
           origin: { x: 1, y: 0.85 },
-          colors: ['#10b981', '#d97706', '#ef4444', '#ffffff']
+          colors: ['#10b981', '#3b82f6', '#f59e0b', '#ffffff']
         });
 
         if (Date.now() < end) {
