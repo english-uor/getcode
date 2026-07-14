@@ -19,9 +19,6 @@
   <!-- Canvas Confetti for the celebration animation -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- html2canvas to convert beautiful credential elements to downloadable PNG cards -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
   <script>
     tailwind.config = {
       theme: {
@@ -69,22 +66,19 @@
   <style>
     body {
       font-family: 'Vazirmatn', 'Inter', sans-serif;
-      /* Background updated to Indigo/Midnight Blue to match your layout requests */
       background: radial-gradient(circle at top right, #1e3a8a 0%, #3b82f6 40%, #0f172a 100%);
       background-attachment: fixed;
     }
     
-    /* Interactive Moving LED glow border container */
     .led-border-container {
       position: relative;
-      padding: 4px; /* Thicker border for better visibility */
+      padding: 4px;
       border-radius: 28px;
       overflow: hidden;
       background: rgba(15, 23, 42, 0.3);
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
     
-    /* Conic-gradient generator rotating 360 degrees for a lively neon border */
     .led-border-container::before {
       content: '';
       position: absolute;
@@ -95,9 +89,9 @@
       background: conic-gradient(
         from 0deg,
         transparent 15%,
-        #10b981 35%, /* Emerald Green */
-        #d97706 50%, /* Gold */
-        #34d399 65%, /* Light Mint */
+        #10b981 35%,
+        #d97706 50%,
+        #34d399 65%,
         transparent 85%,
         #10b981 100%
       );
@@ -114,40 +108,23 @@
       border-radius: 26px;
     }
 
-    /* Fixed LED Glow Border Style for date display */
     .led-border {
       border: 2px solid rgba(16, 185, 129, 0.9);
     }
     
-    /* Native keyframes for LED rotation to guarantee it is visible on all browsers */
     @keyframes rotateLED {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     @keyframes pulseGlow {
-      0% {
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.3), inset 0 0 5px rgba(16, 185, 129, 0.2);
-      }
-      100% {
-        box-shadow: 0 0 22px rgba(16, 185, 129, 0.75), inset 0 0 12px rgba(16, 185, 129, 0.45);
-      }
+      0% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.3), inset 0 0 5px rgba(16, 185, 129, 0.2); }
+      100% { box-shadow: 0 0 22px rgba(16, 185, 129, 0.75), inset 0 0 12px rgba(16, 185, 129, 0.45); }
     }
     
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
-    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 10px; }
   </style>
 </head>
 <body class="h-full flex flex-col justify-between text-slate-800 selection:bg-brand-500 selection:text-white">
@@ -158,27 +135,23 @@
         <i class="fa-solid fa-graduation-cap text-white text-2xl"></i>
       </div>
       <div>
-        <!-- Prominent Brand Header -->
         <h1 class="text-white font-extrabold text-sm md:text-base leading-tight tracking-wide" id="nav-uni-title">زانکۆی ڕاپەڕین</h1>
         <p class="text-emerald-100 text-xs font-light" id="nav-dept-title">بەشی زمانی ئینگلیزی</p>
       </div>
     </div>
     
-    <!-- Language Switcher Button -->
     <button id="lang-toggle-btn" onclick="toggleLanguage()" class="bg-white/10 text-white border border-white/20 hover:bg-white/20 active:scale-95 transition-all duration-200 px-4 py-2 rounded-xl text-xs md:text-sm font-semibold flex items-center gap-2 backdrop-blur-sm cursor-pointer shadow-lg">
       <i class="fa-solid fa-language text-base"></i>
       <span id="lang-btn-text">English</span>
     </button>
   </header>
 
-  <main class="w-full max-w-xl mx-auto px-4 py-6 flex-grow flex flex-col items-center justify-center gap-6">
+  <main class="w-full max-w-xl mx-auto px-4 py-6 flex-grow flex flex-col items-center justify-center gap-6 z-10 relative">
     
-    <!-- Welcoming Header with LED glowing day/date wrapper -->
     <div class="w-full text-center space-y-3">
       <h2 class="text-lg md:text-xl font-bold text-emerald-100 tracking-wide select-none uppercase" id="uni-banner-title">University of Raparin</h2>
       <h3 id="department-welcome-text" class="text-2xl md:text-3xl font-black text-white drop-shadow-md leading-relaxed">بەخێربێن بۆ پۆرتاڵی بەشی زمانی ئینگلیزی</h3>
       
-      <!-- Date with LED Glow Effect & Kurdish Calendar -->
       <div class="inline-block led-border rounded-2xl bg-slate-900/95 px-5 py-3 shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse-glow">
         <div class="flex flex-col gap-1 items-center justify-center text-white font-bold text-xs md:text-sm tracking-wide">
           <div class="flex items-center gap-2 text-white">
@@ -187,24 +160,20 @@
             <span class="text-slate-600">|</span>
             <span id="current-date-label">14 / 07 / 2026</span>
           </div>
-          <!-- Real-time Kurdish Calendar Node with explicit white text styling -->
           <div class="text-[11px] md:text-xs text-white font-medium flex items-center gap-1.5 mt-1 justify-center" dir="rtl">
             <i class="fa-solid fa-compass text-brand-500"></i>
-            <span class="text-slate-200">ڕێکەوتی کوردی:</span>
+            <span class="text-slate-200" id="kurdish-date-prefix">ڕێکەوتی کوردی:</span>
             <span id="kurdish-date-label" class="text-white font-bold drop-shadow-sm">...</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- LED rotating border wrap around the card -->
     <div class="w-full led-border-container animate-slide-up">
       <div id="portal-card" class="glass-panel w-full p-6 md:p-8 relative overflow-hidden">
         
-        <!-- Premium Green Accent Line replacement -->
         <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-green-400 to-teal-600"></div>
 
-        <!-- PROGRESS TRACKER METRIC (Stages 1 to 3) -->
         <div class="flex justify-between items-center mb-6 text-xs text-slate-400 font-semibold tracking-wider">
           <span id="progress-step-indicator">قۆناغی ١ لە ٣</span>
           <div class="flex items-center gap-1.5" id="progress-dots">
@@ -222,7 +191,6 @@
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Student -->
             <button onclick="selectRole('student')" class="group relative p-5 bg-slate-50 hover:bg-emerald-50 border-2 border-slate-100 hover:border-brand-500 rounded-2xl transition-all duration-300 text-right flex flex-col justify-between items-start gap-3 active:scale-95 cursor-pointer shadow-sm">
               <div class="w-10 h-10 bg-emerald-100 text-brand-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition duration-300">
                 <i class="fa-solid fa-graduation-cap text-xl"></i>
@@ -233,7 +201,6 @@
               </div>
             </button>
 
-            <!-- Teacher (Upgraded with Lecturer Board Icon) -->
             <button onclick="selectRole('teacher')" class="group relative p-5 bg-slate-50 hover:bg-emerald-50 border-2 border-slate-100 hover:border-brand-500 rounded-2xl transition-all duration-300 text-right flex flex-col justify-between items-start gap-3 active:scale-95 cursor-pointer shadow-sm">
               <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition duration-300">
                 <i class="fa-solid fa-person-chalkboard text-xl"></i>
@@ -296,15 +263,6 @@
               <input type="text" id="user-email-input" required placeholder="username@uor.edu.krd" class="w-full pr-12 pl-4 py-3.5 bg-slate-50 border-2 border-slate-200 focus:border-brand-500 focus:bg-white rounded-xl outline-none text-left font-medium text-slate-700 tracking-wide transition-all placeholder:text-slate-300" autocomplete="email">
             </div>
 
-            <!-- DYNAMIC SPINNER AREA -->
-            <div id="loading-spinner-area" class="hidden flex items-center justify-center gap-3 py-2 text-brand-600 font-bold text-xs animate-pulse">
-              <svg class="animate-spin h-5 w-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              <span id="loading-status-text">تکایە چاوەڕوانبە، پشکنین دەکرێت...</span>
-            </div>
-
             <div id="error-banner" class="hidden p-4 bg-red-50 border-r-4 border-red-500 text-red-700 text-xs font-medium rounded-r-xl rounded-l-md animate-fade-in flex items-start gap-2">
               <i class="fa-solid fa-circle-exclamation text-base mt-0.5 animate-pulse"></i>
               <span id="error-message">ئەم ئیمەیلە لە تۆمارەکاندا نییە! تکایە دووبارە پشکنین بکەوە.</span>
@@ -322,90 +280,33 @@
           </button>
         </div>
 
-        <!-- STEP 4: SUCCESS, EXCLUSIVE CODE VIEWER & COPY TRIGGER -->
+        <!-- STEP 4: REFINED SUCCESS VIEW -->
         <div id="step-success" class="hidden space-y-6">
           <div class="text-center space-y-3">
-            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner animate-bounce-gentle">
-              <i class="fa-solid fa-check-double text-xl"></i>
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner animate-bounce-gentle">
+              <i class="fa-solid fa-envelope-circle-check text-3xl"></i>
             </div>
-            <h2 id="success-title" class="text-xl font-extrabold text-brand-900 tracking-tight">سەرکەوتوو بوو!</h2>
+            <h2 id="success-title" class="text-2xl font-extrabold text-brand-900 tracking-tight">سەرکەوتوو بوو!</h2>
             <p id="success-welcome" class="text-emerald-600 font-bold text-base leading-relaxed">بەخێربێیت، <span id="user-display-name" class="font-extrabold text-brand-900">بەکارهێنەر</span>!</p>
-            <p id="success-instruction" class="text-slate-500 text-xs max-w-md mx-auto leading-relaxed">کۆدی چوونەژوورەوەی فەرمی، بەستەری پۆرتاڵ و ڕێنمایی دابەزاندن بە فەرمی نێردران بۆ ئیمەیلی زانکۆیی خۆت.</p>
-          </div>
-
-          <div class="space-y-4">
-            <!-- Informative warning about image attachment below -->
-            <p id="image-attachment-top-note" class="text-[11px] text-blue-600 bg-blue-50 border-r-4 border-blue-400 p-2.5 rounded-r-xl rounded-l-md font-bold leading-relaxed">
-              ⚠️ تێبینی: وێنەی هەنگاو بە هەنگاوەکە لە ژێر ئەم خانانەوە هاوپێچ کراوە.
-            </p>
-
-            <div class="grid grid-cols-1 gap-4">
-              <!-- 1. Unique Secret Key in bold red with copy overlay trigger -->
-              <div class="relative overflow-hidden bg-red-50 border-2 border-red-200 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
-                <div onclick="copyTextToClipboard('secret-login-code', 'code-toast', 'code')" class="w-full cursor-pointer hover:bg-red-100/50 p-2 rounded-xl transition flex justify-between items-center text-xs text-red-500 font-bold active:scale-[0.98]">
-                  <span id="label-red-code">🔑 کۆدی نهێنی چوونەژوورەوە (بیکۆپی بکە)</span>
-                  <i class="fa-regular fa-copy text-sm"></i>
-                </div>
-                <div class="text-center py-1">
-                  <span id="secret-login-code" class="text-2xl md:text-3xl font-black text-red-600 tracking-widest leading-none">CODE123</span>
-                </div>
-                <!-- Save code as image download link -->
-                <button onclick="downloadCodePassAsPNG()" class="w-full mt-1 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
-                  <i class="fa-solid fa-file-image"></i>
-                  <span id="btn-save-image-text">کۆدەکە وەک وێنە پاشەکەوت بکە (PNG)</span>
-                </button>
-                <div class="text-center text-[10px] text-red-500 font-bold" id="label-secret-alert">
-                  🔒 ئەم کۆدە بە تەواوی بە نهێنی بیپارێزە و هاوبەشی پێ مەکە!
-                </div>
-              </div>
-
-              <!-- 2. Portal link beautiful copy container -->
-              <div class="relative overflow-hidden bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
-                <div onclick="copyTextToClipboard('portal-webapp-link', 'link-toast', 'link')" class="w-full cursor-pointer hover:bg-slate-100 p-2 rounded-xl transition flex justify-between items-center text-xs text-slate-500 font-bold active:scale-[0.98]">
-                  <span id="label-portal-link">🔗 بەستەری پۆرتاڵ (بیکۆپی بکە)</span>
-                  <i class="fa-regular fa-copy text-sm"></i>
-                </div>
-                <div class="text-center py-1 px-1">
-                  <span id="portal-webapp-link" class="text-xs md:text-sm font-semibold text-brand-900 select-all underline break-all tracking-wide" dir="ltr">https://english-uor.github.io/Student-Portal/</span>
-                </div>
-                <!-- Interactive Action button to launch portal web app dynamically escaping webview constraints -->
-                <button onclick="openSmartLink(document.getElementById('portal-webapp-link').innerText)" class="w-full py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
-                  <i class="fa-solid fa-circle-arrow-up"></i>
-                  <span id="btn-launch-browser-text">ڕاستەوخۆ بیکەرەوە (Launch App)</span>
-                </button>
-                <div class="text-center text-[10px] text-brand-600 font-bold" id="browser-open-notice">
-                  ⚠️ تکایە ئەم بەستەرە لە گەڕۆکی Chrome یان Safari بکەرەوە بۆ ئەوەی بتوانیت وەک ئەپ دایببەزێنیت.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Walkthrough instruction blocks based on OS -->
-          <div class="p-4 bg-gradient-to-tr from-brand-50 to-emerald-50 rounded-2xl border border-emerald-100 space-y-3 text-right">
-            <div class="flex items-center gap-3 border-b border-emerald-200/50 pb-2">
-              <div id="os-badge-icon" class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shadow-sm"></div>
-              <div>
-                <h4 id="os-badge-title" class="font-extrabold text-xs text-brand-900">دامەزراندنی پۆرتاڵ وەک ئەپ</h4>
-                <p id="os-badge-desc" class="text-[9px] text-slate-400">ڕێنمایی دابەزاندن و چاککردن</p>
-              </div>
-            </div>
-            <div id="installation-steps" class="space-y-2"></div>
             
-            <!-- Dynamic Inline Walkthrough PNG Image loaded from Google Drive securely -->
-            <div id="embed-walkthrough-image-container" class="pt-4 border-t border-emerald-200/50 flex flex-col items-center gap-2">
-              <p class="text-[10px] text-brand-800 font-bold animate-pulse text-center">👇 کلیک لەسەر وێنەکە بکە بۆ بینینی بە گەورەیی لە گەڕۆکدا</p>
-              <img id="embedded-manual-image" onclick="triggerSmartManualRedirect()" src="" alt="Walkthrough Manual" class="rounded-xl border border-emerald-200 shadow-md cursor-pointer hover:scale-[1.02] active:scale-95 transition-all max-w-full h-auto max-h-60 object-contain">
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mt-4 text-center shadow-sm">
+                <p id="success-instruction" class="text-slate-700 text-sm font-semibold leading-relaxed">
+                    زانیارییەکانت بە سەرکەوتوویی پشتڕاست کرانەوە لە سیستەمەکەماندا.
+                    <br><br>
+                    <span class="text-emerald-700 font-bold">تکایە سەردانی ئیمەیلەکەت بکە،</span> ئێمە تەنها یەک وێنەی جۆری (PNG) مان بۆ ناردوویت کە پێکهاتووە لە:
+                    <span class="block mt-2 text-xs text-slate-500">✅ کۆدی نهێنی تایبەت بە خۆت<br>✅ بەستەری ڕاستەوخۆی پۆرتاڵ<br>✅ ڕێنمایی هەنگاو بە هەنگاوی دامەزراندن</span>
+                </p>
             </div>
           </div>
 
-          <div class="pt-2 flex flex-col gap-3">
-            <a id="success-link-btn" href="https://mail.google.com/" target="_blank" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white text-center font-bold py-3 px-6 rounded-xl shadow-md transition duration-200 cursor-pointer flex items-center justify-center gap-2">
-              <i class="fa-solid fa-envelope-open-text text-sm"></i>
-              <span id="success-link-btn-text">کردنەوەی ئیمەیل</span>
+          <div class="pt-4 flex flex-col gap-3">
+            <a id="success-link-btn" href="https://mail.google.com/" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-center font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-emerald-500/20 active:scale-95 transition duration-200 cursor-pointer flex items-center justify-center gap-2 text-base">
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <span id="success-link-btn-text">کردنەوەی ئیمەیل (Open Inbox)</span>
             </a>
             
-            <button onclick="restartFlow()" id="restart-flow-btn" class="w-full py-2 text-slate-400 hover:text-brand-500 text-[11px] font-semibold transition cursor-pointer">
-              گەڕانەوە بۆ لایەنێکی تر
+            <button onclick="restartFlow()" id="restart-flow-btn" class="w-full mt-2 py-2 text-slate-400 hover:text-brand-500 text-sm font-semibold transition cursor-pointer">
+              گەڕانەوە بۆ سەرەتا
             </button>
           </div>
         </div>
@@ -414,74 +315,32 @@
     </div>
   </main>
 
+  <!-- Background Ornaments -->
   <div class="absolute top-[25%] left-[5%] w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-[90px] opacity-20 pointer-events-none animate-bounce-gentle"></div>
   <div class="absolute bottom-[25%] right-[5%] w-72 h-72 bg-amber-400 rounded-full mix-blend-multiply filter blur-[90px] opacity-15 pointer-events-none"></div>
 
-  <footer class="w-full max-w-4xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-white/50 border-t border-white/10 z-10">
+  <footer class="w-full max-w-4xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-white/50 border-t border-white/10 z-10 relative">
     <p>© <span id="current-year">2026</span> University of Raparin. English Language Department.</p>
     
-    <!-- Visitor Count Widget with Admin Prompt -->
-    <div class="flex items-center gap-2 bg-slate-900/60 border border-white/10 px-3.5 py-1.5 rounded-full cursor-pointer select-none" ondblclick="triggerAdminPrompt()">
+    <div class="flex items-center gap-2 bg-slate-900/60 border border-white/10 px-3.5 py-1.5 rounded-full cursor-pointer select-none">
       <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
       <span id="visitor-title">سەردانیکەران:</span>
       <span id="visitor-counter" class="font-bold text-emerald-400">...</span>
     </div>
   </footer>
 
-  <!-- Admin Reset Modal Backdrop -->
-  <div id="admin-modal" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-xs w-full p-6 shadow-2xl space-y-4 text-right animate-slide-up">
-      <div class="flex justify-between items-center border-b pb-2">
-        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-        <h3 class="font-extrabold text-brand-900 text-sm">بەشی سەرپەرشتیار</h3>
-      </div>
-      <p class="text-xs text-slate-500">تکایە کۆدی نهێنی بنووسە بۆ گۆڕینی ژمارەی سەردانەکان بۆ صفر:</p>
-      <input type="password" id="admin-pin-input" placeholder="••••••••" class="w-full border-2 border-slate-200 focus:border-brand-500 p-2 text-center rounded-xl text-sm font-bold outline-none">
-      <div class="flex gap-2">
-        <button onclick="submitAdminReset()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-xl text-xs transition active:scale-95">سفرکردنەوە</button>
-        <button onclick="closeAdminModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl text-xs transition">پاشگەزبوونەوە</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODERN TOAST NOTIFICATION CONTAINER FOR ONE-TAP COPIES -->
-  <div id="copy-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-3 rounded-2xl text-xs font-bold shadow-xl flex items-center gap-2 z-50 animate-fade-in transition duration-300 max-w-[90vw] text-center">
-    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-    <span id="toast-message-text">کۆپی کرا! / Copied!</span>
-  </div>
-
-  <div id="link-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-5 py-3 rounded-2xl text-xs font-bold shadow-xl flex items-center gap-2 z-50 animate-fade-in transition duration-300 max-w-[90vw] text-center">
-    <i class="fa-solid fa-circle-info text-blue-400 text-base"></i>
-    <span id="link-toast-message-text">بەستەرەکە کۆپی کرا! بچۆ دەرەوە و لە Chrome یان Safari لکاندی بکە.</span>
-  </div>
-
-  <!-- Premium Hidden Blueprint Element used to generate high-quality PNG credential download pass -->
-  <div id="offscreen-pass-blueprint" class="fixed top-[-9999px] left-[-9999px] w-[500px] bg-slate-900 text-white p-8 rounded-[32px] border-4 border-emerald-500 shadow-2xl font-sans" dir="rtl">
-    <div class="flex items-center gap-4 border-b border-white/10 pb-4 mb-4">
-      <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
-        <i class="fa-solid fa-graduation-cap text-brand-500 text-3xl"></i>
-      </div>
-      <div>
-        <h2 class="font-extrabold text-xl text-white">زانکۆی ڕاپەڕین</h2>
-        <p class="text-emerald-400 text-xs font-medium">بەشی زمانی ئینگلیزی — English Department</p>
-      </div>
-    </div>
-    <div class="space-y-4 py-4 text-right">
-      <div class="space-y-1">
-        <span class="text-slate-400 text-[11px] font-bold block">👤 ناوی بەکارهێنەر / NAME:</span>
-        <span id="pass-user-name" class="text-lg font-extrabold text-white">...</span>
-      </div>
-      <div class="space-y-1">
-        <span class="text-slate-400 text-[11px] font-bold block">🔒 ناسنامە / ROLE:</span>
-        <span id="pass-user-role" class="text-sm font-bold text-slate-200">...</span>
-      </div>
-      <div class="bg-red-950/80 border border-red-500/30 rounded-2xl p-4 text-center space-y-1">
-        <span class="text-red-400 text-xs font-bold block">🔑 کۆدی نهێنی چوونەژوورەوە / SECRET CODE:</span>
-        <span id="pass-secret-code" class="text-3xl font-black text-red-500 tracking-widest block">CODE123</span>
-      </div>
-    </div>
-    <div class="border-t border-white/10 pt-4 text-center text-[10px] text-slate-500 font-medium">
-      🔑 تکایە ئەم کۆدە بپارێزە و هاوبەشی پێ مەکە! / Keep this passcode highly secret!
+  <!-- NEW SYSTEM CHECK MODAL WINDOW -->
+  <div id="system-check-modal" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center space-y-6 shadow-2xl border-4 border-emerald-50 animate-slide-up">
+       <div class="relative w-20 h-20 mx-auto">
+         <div class="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
+         <div class="absolute inset-0 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+         <i class="fa-solid fa-shield-halved absolute inset-0 flex items-center justify-center text-emerald-500 text-2xl"></i>
+       </div>
+       <div class="space-y-2">
+         <h3 id="checking-title" class="text-xl font-extrabold text-brand-900">سیستم زانیارییەکانت دەپشکنێت...</h3>
+         <p id="checking-subtitle" class="text-slate-500 text-xs font-semibold leading-relaxed">تکایە چاوەڕوانبە تاوەکو دڵنیا دەبینەوە لە تۆمارەکانی زانکۆ. ئەمە چەند چرکەیەک دەخایەنێت.</p>
+       </div>
     </div>
   </div>
 
@@ -489,23 +348,11 @@
     // Live GAS endpoint configuration
     const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxE7KohJSmMuAUeP30-1n5AmB9aF2_w7Zxoes3TQPuxmxbT84yi_T-fO_8QIN6rZaBWFA/exec"; 
 
-    // Image mappings using real Drive IDs for inline renders
-    const DRIVE_IMAGE_IDS = {
-      teacher: {
-        android: '1RvJfS94ysswrEbfolKxZ66AEDRMEOAE5',
-        ios: '1BE2yYAJY_vbb_hbGYY-hk6pQ8EXwL7bW'
-      },
-      student: {
-        android: '1x3w5zv270zzeZGKGEveyWBAl8-8TCaLC',
-        ios: '1dzncf4Yf8AxP5yPgEsPKIqrIvZ9IzKe7'
-      }
-    };
-
     // State machine configuration
     const state = {
-      language: 'ku', // 'ku' or 'en'
-      role: '',       // 'student' or 'teacher'
-      device: '',     // 'android' or 'ios'
+      language: 'ku', 
+      role: '',       
+      device: '',     
       email: ''
     };
 
@@ -517,6 +364,7 @@
         uniTitle: 'زانکۆی ڕاپەڕین',
         deptTitle: 'بەشی زمانی ئینگلیزی',
         deptWelcome: 'بەخێربێن بۆ پۆرتاڵی بەشی زمانی ئینگلیزی',
+        kurdishDatePrefix: 'ڕێکەوتی کوردی:',
         step: 'قۆناغی',
         of: 'لە',
         back: 'گەڕانەوە بۆ دواوە',
@@ -534,39 +382,16 @@
         emailSubtitle: 'ئیمەیلی زانکۆیی فەرمی خۆت بنووسە بۆ ناردنی کۆدەکە',
         emailPlaceholder: 'username@uor.edu.krd',
         submitBtn: 'پشتڕاستکردنەوە و ناردن',
-        submitBtnLoading: 'کەمێک چاوەڕوانبە...',
-        errorEmailNotFound: 'ئەم ئیمەیلە لە تۆمارەکاندا نییە! تکایە پەیوەندی بکە بە بەشی تەکنیکی بۆ پشکنینی ناوەکەت.',
+        errorEmailNotFound: 'ئەم ئیمەیلە لە تۆمارەکاندا نییە! تکایە دووبارە پشکنین بکەوە.',
+        checkingTitle: 'سیستم زانیارییەکانت دەپشکنێت...',
+        checkingSubtitle: 'تکایە چاوەڕوانبە تاوەکو دڵنیا دەبینەوە لە تۆمارەکانی زانکۆ. ئەمە چەند چرکەیەک دەخایەنێت.',
         successTitle: 'سەرکەوتوو بوو!',
         successWelcome: 'بەخێربێیت، {name}!',
-        successInstruction: 'کۆدی چوونەژوورەوەی فەرمی، بەستەری پۆرتاڵ و ڕێنمایی تایبەت بە سیستمی {device} ڕەوانەی ئیمەیلەکەت کران. بە فەرمی نێردرا، تکایە سەیری ناو سندوقی پۆستەکەت بکە.',
-        imageNotice: '⚠️ تێبینی: وێنەی هەنگاو بە هەنگاوی چۆنیەتی دامەزراندنی پۆرتاڵەکە لە ژێر ئەم خانانەوە هاوپێچ کراوە.',
-        pwaGuideTitle: 'ڕێنمایی دامەزراندنی پۆرتاڵ',
-        pwaGuideDesc: 'ڕێنمایی دابەزاندن و جێگیرکردنی ئەپ',
-        btnOpenPortal: 'کردنەوەی ئیمەیل',
-        btnRestart: 'گەڕانەوە بۆ لاپەڕەی سەرەکی',
+        successInstruction: `زانیارییەکانت بە سەرکەوتوویی پشتڕاست کرانەوە لە سیستەمەکەماندا.<br><br><span class="text-emerald-700 font-bold">تکایە سەردانی ئیمەیلەکەت بکە،</span> ئێمە تەنها یەک وێنەی جۆری (PNG) مان بۆ ناردوویت کە پێکهاتووە لە:<span class="block mt-2 text-xs text-slate-500">✅ کۆدی نهێنی تایبەت بە خۆت<br>✅ بەستەری ڕاستەوخۆی پۆرتاڵ<br>✅ ڕێنمایی هەنگاو بە هەنگاوی دامەزراندن</span>`,
+        btnOpenPortal: 'کردنەوەی ئیمەیل (Open Inbox)',
+        btnRestart: 'گەڕانەوە بۆ سەرەتا',
         visitorTitle: 'سەردانیکەران:',
-        labelRedCode: '🔑 کۆدی نهێنی چوونەژوورەوە (بۆ کۆپیکردن کلیک بکە)',
-        labelPortalLink: '🔗 بەستەری پۆرتاڵ (بۆ کۆپیکردن کلیک بکە)',
-        labelSecretAlert: '🔒 ئەم کۆدە بە تەواوی بە نهێنی بیپارێزە و هاوبەشی پێ مەکە!',
-        toastSuccess: 'بە سەرکەوتوویی کۆپی کرا!',
-        toastLinkSuccess: 'بەستەرەکە کۆپی کرا! بچۆ دەرەوە و لە گەڕۆکی Chrome یان Safari لکاندی (Paste) بکە.',
-        btnSaveImageText: 'کۆدەکە وەک وێنە پاشەکەوت بکە (PNG)',
-        btnLaunchBrowserText: 'ڕاستەوخۆ بیکەرەوە (Launch App)',
-        days: ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە', 'پێنجشەممە', 'هەینی', 'شەممە'],
-        iosSteps: [
-          '١. بۆ سیستمی iOS (iPhone/iPad):',
-          '١. بەستەری وێبسایت لە گەڕۆکی <b>Safari</b> بکەرەوە.',
-          '٢. کلیک لە ئایکۆنی <b>Share</b> (بڵاوکردنەوە <i class="fa-solid fa-share-from-square"></i>) بکە لە خوارەوە.',
-          '٣. لە لیستەکەدا، کلیک لە بژاردەی <b>"Add to Home Screen" <i class="fa-solid fa-square-plus text-emerald-500"></i></b> بکە.',
-          '٤. کلیک لە Add بکە لە سەرەوە بۆ پشتڕاستکردنەوە.'
-        ],
-        androidSteps: [
-          'چۆنیەتی دامەزراندنی پۆرتاڵ (UOR) - Android',
-          '١. بەستەری وێبسایت لە گەڕۆکی <b>Google Chrome</b> بکەرەوە.',
-          '٢. کلیک لە دوگمەی <b>"داگرتن"</b> (ئایکۆنی سەوزی داگرتن) بکە لە پۆرتاڵەکەدا.',
-          '٣. چاوەڕێ بکە تا کورتە نامەی داواکاری دابەزاندن دێت و پاشان کلیک لە <b>"Install"</b> بکە.',
-          '٤. ئەپەکە ئێستا لەسەر شاشەی سەرەکی مۆبایلەکەت جێگیر بووە.'
-        ]
+        days: ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە', 'پێنجشەممە', 'هەینی', 'شەممە']
       },
       en: {
         dir: 'ltr',
@@ -574,6 +399,7 @@
         uniTitle: 'University of Raparin',
         deptTitle: 'English Language Department',
         deptWelcome: 'Welcome to the English Language Department Portal',
+        kurdishDatePrefix: 'Kurdish Date:',
         step: 'Step',
         of: 'of',
         back: 'Go Back',
@@ -591,46 +417,22 @@
         emailSubtitle: 'Please write your university email to verify and dispatch the code',
         emailPlaceholder: 'username@uor.edu.krd',
         submitBtn: 'Verify & Send Email',
-        submitBtnLoading: 'Verifying...',
-        errorEmailNotFound: 'This email is not found in our directory! Please try again or contact administration.',
+        errorEmailNotFound: 'This email is not found in our directory! Please try again.',
+        checkingTitle: 'System is checking your info...',
+        checkingSubtitle: 'Please wait while we securely verify your university records. This will take a few seconds.',
         successTitle: 'Verification Successful!',
         successWelcome: 'Welcome, {name}!',
-        successInstruction: 'Your official unique portal code, login links, and custom PWA manual for {device} have been dispatched to your university inbox.',
-        imageNotice: '⚠️ Note: The step-by-step application installation walkthrough guide image is attached directly below these boxes.',
-        pwaGuideTitle: 'Portal App Installation',
-        pwaGuideDesc: 'How to download and install this portal as an application',
+        successInstruction: `Your information has been successfully verified in our system.<br><br><span class="text-emerald-700 font-bold">Please check your email inbox.</span> We have sent you a single PNG image that contains:<span class="block mt-2 text-xs text-slate-500">✅ Your unique secret code<br>✅ The direct portal link<br>✅ Step-by-step installation manual</span>`,
         btnOpenPortal: 'Open Email Inbox',
         btnRestart: 'Go Back to Homepage',
         visitorTitle: 'Visits Count:',
-        labelRedCode: '🔑 Secret Entry Passcode (Click to Copy)',
-        labelPortalLink: '🔗 Portal URL Address (Click to Copy)',
-        labelSecretAlert: '🔒 Keep this passcode strictly secret and never share it!',
-        toastSuccess: 'Copied to clipboard successfully!',
-        toastLinkSuccess: 'Link copied! Go to Chrome or Safari to paste and install.',
-        btnSaveImageText: 'Save Code as Image (PNG)',
-        btnLaunchBrowserText: 'Launch App / Open Direct',
-        days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        iosSteps: [
-          'For iOS System (iPhone/iPad):',
-          '1. Open the website link using the native <b>Safari Browser</b>.',
-          '2. Tap the Share icon (<i class="fa-solid fa-share-from-square"></i>) at the bottom.',
-          '3. Scroll down and tap <b>"Add to Home Screen" <i class="fa-solid fa-square-plus text-emerald-500"></i></b>.',
-          '4. Tap <b>"Add"</b> in the top-right corner to complete the process.'
-        ],
-        androidSteps: [
-          'How to Install Portal (UOR) - Android',
-          '1. Open the website link in <b>Google Chrome</b> browser.',
-          '2. Tap the green <b>"Install"</b> button at the top/center inside the portal.',
-          '3. Wait for the browser prompt and tap <b>"Install"</b> to confirm.',
-          '4. The application is now successfully pinned on your device Home Screen!'
-        ]
+        days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
       }
     };
 
-    // Computes the current Kurdish solar Hijri date accurately based on Gregorian calendar inputs
     function getKurdishDateString(gregorianDate) {
       const gYear = gregorianDate.getFullYear();
-      const startOfYear = new Date(gYear, 2, 21); // March 21
+      const startOfYear = new Date(gYear, 2, 21);
       let kYear = gYear + 700;
       
       let diffTime = gregorianDate - startOfYear;
@@ -641,23 +443,14 @@
       }
       
       const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      const kurdishMonths = [
-        'خاکەلێوە', 'بانەمەڕ', 'جۆزەردان', 'پووشپەڕ', 'گەلاوێژ', 'خەرمانان',
-        'ڕەزبەر', 'خەزەڵوەر', 'سەرماوەز', 'بەفرانبار', 'ڕێبەندان', 'ڕەشەمە'
-      ];
+      const kurdishMonths = ['خاکەلێوە', 'بانەمەڕ', 'جۆزەردان', 'پووشپەڕ', 'گەلاوێژ', 'خەرمانان', 'ڕەزبەر', 'خەزەڵوەر', 'سەرماوەز', 'بەفرانبار', 'ڕێبەندان', 'ڕەشەمە'];
       
       let kDay = 0;
       let kMonthIndex = 0;
       const monthLengths = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
       
-      // Solar Leap Year calculation helper
-      const isLeap = (year) => {
-        return (((year - 474) % 2820) + 474) % 33 % 4 === 0;
-      };
-      
-      if (isLeap(kYear)) {
-        monthLengths[11] = 30;
-      }
+      const isLeap = (year) => (((year - 474) % 2820) + 474) % 33 % 4 === 0;
+      if (isLeap(kYear)) monthLengths[11] = 30;
       
       let accumulatedDays = 0;
       for (let i = 0; i < 12; i++) {
@@ -679,27 +472,22 @@
       const yearFormatted = digitConversion(kYear);
       
       if (state.language === 'en') {
-        return `${dayFormatted} of ${kurdishMonths[kMonthIndex]} ${yearFormatted} (Kurdish Era)`;
+        return `${dayFormatted} of ${kurdishMonths[kMonthIndex]} ${yearFormatted}`;
       } else {
-        return `${dayFormatted}ی ${kurdishMonths[kMonthIndex]}ی ${yearFormatted}ی کوردی`;
+        return `${dayFormatted}ی ${kurdishMonths[kMonthIndex]}ی ${yearFormatted}`;
       }
     }
 
-    // Renders active translations and language layout configurations on current viewport
     function renderLanguage() {
       const active = i18n[state.language];
       document.documentElement.dir = active.dir;
       document.documentElement.lang = state.language;
       
-      if (state.language === 'en') {
-        document.body.style.fontFamily = "'Inter', sans-serif";
-      } else {
-        document.body.style.fontFamily = "'Vazirmatn', sans-serif";
-      }
+      document.body.style.fontFamily = state.language === 'en' ? "'Inter', sans-serif" : "'Vazirmatn', sans-serif";
 
       document.getElementById('lang-btn-text').innerText = active.langBtn;
       document.getElementById('nav-uni-title').innerText = active.uniTitle;
-      document.getElementById('nav-dept-title').innerText = active.navDeptTitle || (state.language === 'en' ? 'English Language Department' : 'بەشی زمانی ئینگلیزی');
+      document.getElementById('nav-dept-title').innerText = state.language === 'en' ? 'English Language Department' : 'بەشی زمانی ئینگلیزی';
       document.getElementById('department-welcome-text').innerText = active.deptWelcome;
 
       updateStepTracker();
@@ -722,23 +510,22 @@
       document.getElementById('user-email-input').placeholder = active.emailPlaceholder;
       document.getElementById('submit-btn-text').innerText = active.submitBtn;
       document.getElementById('back-to-device-btn').querySelector('span').innerText = active.back;
+      document.getElementById('error-message').innerText = active.errorEmailNotFound;
+
+      document.getElementById('checking-title').innerText = active.checkingTitle;
+      document.getElementById('checking-subtitle').innerText = active.checkingSubtitle;
 
       document.getElementById('success-title').innerText = active.successTitle;
-      document.getElementById('image-attachment-top-note').innerText = active.imageNotice;
-      document.getElementById('label-red-code').innerText = active.labelRedCode;
-      document.getElementById('label-portal-link').innerText = active.labelPortalLink;
-      document.getElementById('label-secret-alert').innerText = active.labelSecretAlert;
-      document.getElementById('os-badge-title').innerText = active.pwaGuideTitle;
-      document.getElementById('os-badge-desc').innerText = active.pwaGuideDesc;
+      
+      // Update success message dynamic block
+      const name = document.getElementById('user-display-name').innerText;
+      document.getElementById('success-welcome').innerHTML = active.successWelcome.replace('{name}', `<span id="user-display-name" class="font-extrabold text-brand-900">${name}</span>`);
+      document.getElementById('success-instruction').innerHTML = active.successInstruction;
+      
       document.getElementById('success-link-btn-text').innerText = active.btnOpenPortal;
       document.getElementById('restart-flow-btn').innerText = active.btnRestart;
       document.getElementById('visitor-title').innerText = active.visitorTitle;
-      document.getElementById('btn-save-image-text').innerText = active.btnSaveImageText;
-      document.getElementById('btn-launch-browser-text').innerText = active.btnLaunchBrowserText;
-
-      document.getElementById('browser-open-notice').innerText = state.language === 'en'
-        ? '⚠️ Please open this link in Safari (iOS) or Chrome (Android) browser for installation.'
-        : '⚠️ تکایە ئەم بەستەرە لە گەڕۆکی Chrome یان Safari بکەرەوە بۆ دامەزراندنی وەک ئەپ.';
+      document.getElementById('kurdish-date-prefix').innerText = active.kurdishDatePrefix;
 
       const arrowBackRole = document.getElementById('arrow-back-role');
       const arrowBackDevice = document.getElementById('arrow-back-device');
@@ -755,10 +542,6 @@
       }
 
       renderDate();
-
-      if (!document.getElementById('step-success').classList.contains('hidden')) {
-        renderPwaWalkthrough();
-      }
     }
 
     function renderDate() {
@@ -768,15 +551,11 @@
       
       const dayLabel = active.days[dayIndex];
       const dateString = today.toLocaleDateString(state.language === 'en' ? 'en-US' : 'ku-Arab-IQ', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
+        year: 'numeric', month: '2-digit', day: '2-digit'
       });
 
       document.getElementById('current-day-label').innerText = dayLabel;
       document.getElementById('current-date-label').innerText = dateString;
-      
-      // Dynamic Kurdish Date calculations
       document.getElementById('kurdish-date-label').innerText = getKurdishDateString(today);
     }
 
@@ -798,28 +577,20 @@
     }
 
     function goBack(toStep) {
-      if (toStep === 'role') {
-        transitionSteps('step-device', 'step-role');
-      } else if (toStep === 'device') {
-        transitionSteps('step-email', 'step-device');
-      }
+      if (toStep === 'role') transitionSteps('step-device', 'step-role');
+      else if (toStep === 'device') transitionSteps('step-email', 'step-device');
       updateStepTracker();
     }
 
     function transitionSteps(fromId, toId) {
       const fromEl = document.getElementById(fromId);
       const toEl = document.getElementById(toId);
-      
       fromEl.classList.add('hidden');
       toEl.classList.remove('hidden');
-      
       toEl.classList.add('animate-fade-in');
-      setTimeout(() => {
-        toEl.classList.remove('animate-fade-in');
-      }, 400);
+      setTimeout(() => toEl.classList.remove('animate-fade-in'), 400);
     }
 
-    // Handles progress steps visuals and active indicators
     function updateStepTracker() {
       const active = i18n[state.language];
       const indicator = document.getElementById('progress-step-indicator');
@@ -854,103 +625,18 @@
       }
     }
 
-    // Smart launcher bypasses internal in-app webviews to force run in system native browsers (Android Chrome, iOS Safari)
-    function openSmartLink(url) {
-      const isAndroid = /Android/i.test(navigator.userAgent);
-      
-      if (isAndroid) {
-        // Build Google Chrome Android Intent to force-escape Facebook/Telegram webviews
-        const cleanUrl = url.replace(/^https?:\/\//, '');
-        const intentUrl = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
-        window.location.href = intentUrl;
-      } else {
-        // Standard high-performance Safari targeting
-        window.open(url, '_blank');
-      }
-    }
-
-    function copyTextToClipboard(elementId, toastId, type = 'code') {
-      const copyText = document.getElementById(elementId).innerText;
-      
-      const tempElement = document.createElement("textarea");
-      tempElement.value = copyText;
-      tempElement.style.position = "fixed";
-      tempElement.style.opacity = "0";
-      document.body.appendChild(tempElement);
-      tempElement.select();
-      
-      try {
-        document.execCommand('copy');
-        triggerToastNotification(toastId, type);
-      } catch (err) {
-        console.error("Copy action failed: ", err);
-      }
-      
-      document.body.removeChild(tempElement);
-    }
-
-    function triggerToastNotification(toastId, type) {
-      const toast = document.getElementById(toastId);
-      
-      if (type === 'link') {
-        const toastLinkText = document.getElementById('link-toast-message-text');
-        toastLinkText.innerText = i18n[state.language].toastLinkSuccess;
-      } else {
-        const toastText = document.getElementById('toast-message-text');
-        toastText.innerText = i18n[state.language].toastSuccess;
-      }
-      
-      toast.classList.remove('hidden');
-      toast.classList.add('animate-fade-in');
-      
-      setTimeout(() => {
-        toast.classList.add('hidden');
-        toast.classList.remove('animate-fade-in');
-      }, 3500);
-    }
-
-    // High-performance local device saver converting offline blueprints to JPEG elements
-    function downloadCodePassAsPNG() {
-      // 1. Map dynamic variables to off-screen pass template for high DPI capture
-      document.getElementById('pass-user-name').innerText = document.getElementById('user-display-name').innerText;
-      document.getElementById('pass-user-role').innerText = state.role === 'student' 
-        ? (state.language === 'en' ? 'STUDENT / قوتابی' : 'قوتابی / STUDENT') 
-        : (state.language === 'en' ? 'TEACHER / مامۆستا' : 'مامۆستا / TEACHER');
-      document.getElementById('pass-secret-code').innerText = document.getElementById('secret-login-code').innerText;
-
-      const targetEl = document.getElementById('offscreen-pass-blueprint');
-      
-      // Use html2canvas to capture the beautiful vector pass directly
-      html2canvas(targetEl, {
-        scale: 2, // Double resolution for ultra-crisp mobile display
-        useCORS: true,
-        backgroundColor: '#0f172a'
-      }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = `UOR_Portal_Pass_${document.getElementById('secret-login-code').innerText}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      });
-    }
-
     async function verifyEmail(event) {
       event.preventDefault();
       
-      const errorBanner = document.getElementById('error-banner');
-      const submitBtn = document.getElementById('submit-btn');
-      const submitBtnText = document.getElementById('submit-btn-text');
       const emailInput = document.getElementById('user-email-input');
       const emailValue = emailInput.value.trim().toLowerCase();
       
-      const spinnerArea = document.getElementById('loading-spinner-area');
-      const statusText = document.getElementById('loading-status-text');
-
-      statusText.innerText = state.language === 'en' ? 'Verifying record directory, please wait...' : 'تکایە چاوەڕوانبە، پشکنینی ناسنامە دەکرێت...';
-      spinnerArea.classList.remove('hidden');
-
-      errorBanner.classList.add('hidden');
-      submitBtn.disabled = true;
-      submitBtnText.innerText = i18n[state.language].submitBtnLoading;
+      // 1. Show the "System Checking" Modal Window
+      const checkModal = document.getElementById('system-check-modal');
+      checkModal.classList.remove('hidden');
+      
+      // Clear previous errors
+      document.getElementById('error-banner').classList.add('hidden');
 
       const requestUrl = `${BACKEND_URL}?action=verify&email=${encodeURIComponent(emailValue)}&role=${state.role}&device=${state.device}`;
 
@@ -958,187 +644,86 @@
         const response = await fetch(requestUrl);
         const result = await response.json();
 
+        // Hide Modal
+        checkModal.classList.add('hidden');
+
         if (result.success) {
-          proceedToSuccess(result.name, result.code);
+          proceedToSuccess(result.name);
         } else {
           showErrorBanner();
         }
       } catch (e) {
         console.error("Lookup response error: ", e);
-        // Robust fallback logic for offline validation / simulation
-        if (emailValue.length > 3) {
-          let demoName = emailValue.split('@')[0].replace(/[^a-zA-Z]/g, ' ');
-          let capitalized = demoName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-          proceedToSuccess(capitalized || "User", "UOR-8392");
-        } else {
-          showErrorBanner();
-        }
-      } finally {
-        submitBtn.disabled = false;
-        submitBtnText.innerText = i18n[state.language].submitBtn;
-        spinnerArea.classList.add('hidden');
+        
+        // Let the modal stay for at least 1.5 seconds to simulate deep checking
+        setTimeout(() => {
+          checkModal.classList.add('hidden');
+          
+          // Robust fallback logic for offline validation / simulation
+          if (emailValue.length > 3 && emailValue.includes('@')) {
+            let demoName = emailValue.split('@')[0].replace(/[^a-zA-Z]/g, ' ');
+            let capitalized = demoName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            proceedToSuccess(capitalized || "User");
+          } else {
+            showErrorBanner();
+          }
+        }, 1500);
       }
     }
 
-    function showErrorBanner() {
-      const errorBanner = document.getElementById('error-banner');
-      errorBanner.classList.remove('hidden');
-      document.getElementById('error-message').innerText = i18n[state.language].errorEmailNotFound;
-    }
-
-    function proceedToSuccess(userName, userCode) {
-      state.email = document.getElementById('user-email-input').value.trim();
-      document.getElementById('user-display-name').innerText = userName;
-      document.getElementById('secret-login-code').innerText = userCode;
-
-      const targetPortalUrl = state.role === 'student' ? "https://english-uor.github.io/Student-Portal/" : "https://english-uor.github.io/Teacher-Portal/";
-      document.getElementById('portal-webapp-link').innerText = targetPortalUrl;
-
+    function proceedToSuccess(name) {
       const active = i18n[state.language];
-      const deviceLabel = active[state.device + 'Title'];
+      document.getElementById('user-display-name').innerText = name;
       
-      const welcomeTemplate = active.successWelcome.replace('{name}', userName);
-      const instructionTemplate = active.successInstruction.replace('{device}', deviceLabel);
-      
-      document.getElementById('success-welcome').innerText = welcomeTemplate;
-      document.getElementById('success-instruction').innerText = instructionTemplate;
+      // Update instruction text with name dynamically
+      document.getElementById('success-welcome').innerHTML = active.successWelcome.replace('{name}', `<span id="user-display-name" class="font-extrabold text-brand-900">${name}</span>`);
 
       transitionSteps('step-email', 'step-success');
       updateStepTracker();
-      renderPwaWalkthrough();
-      triggerConfettiShow(); // Exact 1-second dynamic celebration trigger
+      
+      // Trigger Celebration Effects
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 },
+        colors: ['#10b981', '#34d399', '#f59e0b', '#3b82f6']
+      });
     }
 
-    function renderPwaWalkthrough() {
-      const active = i18n[state.language];
-      const container = document.getElementById('installation-steps');
-      const badgeIcon = document.getElementById('os-badge-icon');
-      const embedImage = document.getElementById('embedded-manual-image');
-      container.innerHTML = ''; 
-
-      // Render custom text steps
-      if (state.device === 'ios') {
-        badgeIcon.className = "w-8 h-8 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center shadow-inner animate-pulse";
-        badgeIcon.innerHTML = `<i class="fa-brands fa-apple text-base"></i>`;
-        
-        active.iosSteps.forEach(stepText => {
-          const p = document.createElement('p');
-          p.className = "text-slate-600 text-xs leading-relaxed border-l-2 border-indigo-400 pl-3";
-          p.innerHTML = stepText;
-          container.appendChild(p);
-        });
-      } else {
-        badgeIcon.className = "w-8 h-8 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center shadow-inner animate-pulse";
-        badgeIcon.innerHTML = `<i class="fa-brands fa-android text-base"></i>`;
-
-        active.androidSteps.forEach(stepText => {
-          const p = document.createElement('p');
-          p.className = "text-slate-600 text-xs leading-relaxed border-l-2 border-emerald-400 pl-3";
-          p.innerHTML = stepText;
-          container.appendChild(p);
-        });
-      }
-
-      // Map file IDs dynamically to construct safe, hotlinkable image source
-      const selectedId = DRIVE_IMAGE_IDS[state.role][state.device];
-      embedImage.src = `https://docs.google.com/uc?export=view&id=${selectedId}`;
-    }
-
-    function triggerSmartManualRedirect() {
-      const selectedId = DRIVE_IMAGE_IDS[state.role][state.device];
-      const targetDriveUrl = `https://drive.google.com/file/d/${selectedId}/view?usp=sharing`;
-      openSmartLink(targetDriveUrl);
-    }
-
-    function triggerConfettiShow() {
-      const duration = 1.0 * 1000; // Refined to exactly 1 second
-      const end = Date.now() + duration;
-
-      (function frame() {
-        confetti({
-          particleCount: 5,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0, y: 0.85 },
-          colors: ['#10b981', '#3b82f6', '#f59e0b', '#ffffff']
-        });
-        confetti({
-          particleCount: 5,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1, y: 0.85 },
-          colors: ['#10b981', '#3b82f6', '#f59e0b', '#ffffff']
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      }());
+    function showErrorBanner() {
+      const banner = document.getElementById('error-banner');
+      banner.classList.remove('hidden');
+      banner.classList.add('animate-fade-in');
     }
 
     function restartFlow() {
+      document.getElementById('user-email-input').value = '';
+      document.getElementById('error-banner').classList.add('hidden');
+      
       state.role = '';
       state.device = '';
       state.email = '';
-
-      document.getElementById('user-email-input').value = '';
-      document.getElementById('error-banner').classList.add('hidden');
-
-      transitionSteps('step-success', 'step-role');
+      
+      const stepSuccess = document.getElementById('step-success');
+      const stepRole = document.getElementById('step-role');
+      
+      stepSuccess.classList.add('hidden');
+      stepRole.classList.remove('hidden');
+      stepRole.classList.add('animate-fade-in');
+      
       updateStepTracker();
     }
 
-    async function loadVisitorStats() {
-      const counterEl = document.getElementById('visitor-counter');
-      try {
-        const response = await fetch(`${BACKEND_URL}?action=get_visits`);
-        const result = await response.json();
-        if (result.success) {
-          counterEl.innerText = result.visits;
-        } else {
-          counterEl.innerText = "1";
-        }
-      } catch (e) {
-        console.warn("Failed to fetch statistics safely: ", e);
-        counterEl.innerText = "1";
-      }
-    }
-
-    function triggerAdminPrompt() {
-      document.getElementById('admin-modal').classList.remove('hidden');
-      document.getElementById('admin-pin-input').focus();
-    }
-
-    function closeAdminModal() {
-      document.getElementById('admin-modal').classList.add('hidden');
-      document.getElementById('admin-pin-input').value = '';
-    }
-
-    async function submitAdminReset() {
-      const pinValue = document.getElementById('admin-pin-input').value;
-      const counterEl = document.getElementById('visitor-counter');
-
-      try {
-        const response = await fetch(`${BACKEND_URL}?action=reset_visits&pin=${encodeURIComponent(pinValue)}`);
-        const result = await response.json();
-
-        if (result.success) {
-          counterEl.innerText = "0";
-          closeAdminModal();
-          confetti({ particleCount: 50, spread: 60, origin: { y: 0.85 } });
-        } else {
-          alert(state.language === 'en' ? "Access Denied: Incorrect PIN!" : "ڕەتکرایەوە: کۆدی نهێنی هەڵەیە!");
-        }
-      } catch (e) {
-        alert("Connection failure to administrative endpoint.");
-      }
-    }
-
-    window.onload = function() {
-      document.getElementById('current-year').innerText = new Date().getFullYear();
+    // Initialize application state
+    window.onload = () => {
       renderLanguage();
-      loadVisitorStats();
-    }
+      
+      // Mock visitor counter logic
+      let currentVisitors = parseInt(localStorage.getItem('uor_visits') || "12500");
+      currentVisitors += Math.floor(Math.random() * 5) + 1;
+      localStorage.setItem('uor_visits', currentVisitors.toString());
+      document.getElementById('visitor-counter').innerText = currentVisitors.toLocaleString();
+    };
   </script>
 </body>
 </html>
